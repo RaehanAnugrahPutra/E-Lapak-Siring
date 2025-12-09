@@ -36,7 +36,7 @@ apiClient.interceptors.response.use(
         localStorage.removeItem("token");
         localStorage.removeItem("user");
         localStorage.removeItem("userRole");
-        window.location.href = "/login"; // atau "/#/login" sesuai routing
+        window.location.href = "/#/login"; // benar
       }
     }
 
