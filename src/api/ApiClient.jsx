@@ -28,19 +28,23 @@ apiClient.interceptors.request.use(
 apiClient.interceptors.response.use(
   (response) => response,
   (error) => {
-    // Cek apakah request itu bukan /login
-    const isLoginRequest = error.config?.url?.includes("/login");
-
-    if (error.response?.status === 401 && !isLoginRequest) {
-      localStorage.removeItem("token");
-      localStorage.removeItem("user");
-      localStorage.removeItem("userRole");
-      window.location.href = "/#/login";
+    // Jika token invalid saat user sedang login di dashboard
+    if (error.response?.status === 401) {
+      // Tapi jika URL bukan /login, lakukan logout otomatis
+      const isLoginRequest = error.config?.url?.includes("/login");
+      if (!isLoginRequest) {
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
+        localStorage.removeItem("userRole");
+        window.location.href = "/login"; // atau "/#/login" sesuai routing
+      }
     }
 
+    // Tetap lempar error agar bisa ditangkap oleh .catch() di Login.jsx
     return Promise.reject(error);
   }
 );
+
 
 
 export default apiClient;
