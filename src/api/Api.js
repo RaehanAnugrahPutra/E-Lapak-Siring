@@ -105,7 +105,7 @@ export const logout = async () => {
     localStorage.removeItem("user");
     localStorage.removeItem("userRole");
     localStorage.removeItem("userId");
-    window.location.href = "/login";
+    window.location.href = "/#/login";
   }
 };
 
